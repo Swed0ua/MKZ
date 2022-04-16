@@ -298,8 +298,9 @@ const resultGenerator = (data) => {
             headers: {
                 'Accept': 'application/json'
             }
-        }).then(e => console.log(e))
+        })
         .catch(err => console.log(err))
+        document.querySelector('.final-page__form').innerHTML = 'Повідомлення успішно надіслане!'
     }
     postData()
 }
