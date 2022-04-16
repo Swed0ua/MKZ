@@ -10,7 +10,15 @@ const progresIls = {
     progresBar: document.querySelector('div.progress-bar-linear__field > div')
 }
 
+const active = "_active";
+
 let lastSelectChng = new Date ();
+let buttonFirstScr =  document.querySelector('.start-page__button');
+const firstScreenElement = {
+    parent: document.querySelector('.app__start-page'),
+    left : document.querySelector('.start-page__bg'),
+    right : document.querySelector('.start-page__content ')
+}
 
 let quizeItems = [
     {
@@ -257,7 +265,7 @@ let subitems = document.querySelectorAll('.b-radio.radio')
 subitems.forEach( element => {
     element.addEventListener('click', () => {
         let nowDate = new Date();
-        if (nowDate - lastSelectChng > 1000) {
+        if (nowDate - lastSelectChng > 300) {
             switchRadio(element);
             lastSelectChng = nowDate
         }
@@ -267,20 +275,46 @@ subitems.forEach( element => {
 })
 
 const resultGenerator = (data) => {
-    let resultText = '';
+    let resultText = {};
     quizeItems.forEach(element => {
         let resultAsk = '___ '
         element.items.filter(e=> {
             if (e.select) resultAsk = e.text
         }) 
-        resultText += element.title + " => " + resultAsk 
+        resultText[`${element.title}`] =  resultAsk 
     })
-    console.log(resultText)
-    quizeElements.main.innerHTML = resultText;
+
+    quizeElements.main.innerHTML = 'Succes';
+
+    async function postData (){
+        let data = JSON.stringify(resultText)
+        fetch("https://formspree.io/f/xjvlaade", {
+            method: 'POST',
+            body: data,
+            headers: {
+                'Accept': 'application/json'
+            }
+        })
+        .catch(err => console.log(err))
+    }
+    postData()
 }
 
 setTimeout(()=>{
     rerederPage()
 }, 0)
+
+buttonFirstScr.addEventListener('click', ()=> {
+    firstScreenEvent();
+})
+
+const firstScreenEvent = () => {
+    firstScreenElement.parent.classList.add(active);
+    firstScreenElement.left.classList.add(active);
+    firstScreenElement.right.classList.add(active);
+    setTimeout(()=> {
+        firstScreenElement.parent.remove()
+    }, 1500)
+}
 
 
