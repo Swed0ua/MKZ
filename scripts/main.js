@@ -223,7 +223,7 @@ const switchLvl = (action, element = null) => {
         quizProgress.progress -=  quizeItems[index-1].progress;
         quizProgress.bonus -=  quizeItems[index-1].bonus;
     }else if (action && quizProgress.index + 1 == quizeItems.length) {
-        resultGenerator();
+        finalScreenEvent();
     }
     let newCh = document.querySelector(`.quiz__question-item[data-index='${quizProgress.index}']`);
     newCh.classList.add('_active');
@@ -317,4 +317,8 @@ const firstScreenEvent = () => {
     }, 1500)
 }
 
+const finalScreenEvent = () => {
+    document.querySelector('.quiz__lead-form').classList.remove(active);
+    document.querySelector('.quiz.quiz_sidebar_on').classList.add(active);
+}
 
