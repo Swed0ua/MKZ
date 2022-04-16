@@ -491,6 +491,15 @@ HR {
     .answer-images__answer-container.answer-images__answer-container__type_square{
         width: calc(50% - 20px);
     }
+    .bonuses.bonuses_direction_row.bonuses_count_2 {
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .bonuses_direction_row .bonuses__bonus:last-child {
+        margin: 0;
+    }
 }
 
 @media screen and (max-width: 390px) {

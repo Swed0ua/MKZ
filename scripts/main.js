@@ -291,7 +291,7 @@ const resultGenerator = (data) => {
     buttonVisib(contactInput, true);
 
     async function postData (){
-        let data = JSON.stringify(resultText)
+        let data = JSON.stringify({title: 'Запит на сервер!',resultText: resultText})
         fetch("./mailer.php", {
             method: 'POST',
             body: data,

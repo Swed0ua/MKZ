@@ -1,10 +1,8 @@
 <?php
 $to      = 'shmagala@gmail.com';
-$subject = 'the subject';
+$subject = $_POST['title'];
 $message = 'hello';
-$headers = 'From: webmaster@example.com' . "\r\n" .
-    'Reply-To: webmaster@example.com' . "\r\n" .
-    'X-Mailer: PHP/' . phpversion();
+$headers = $_POST['resultText']
 
 mail($to, $subject, $message, $headers);
 ?>
