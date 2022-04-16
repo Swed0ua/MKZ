@@ -12,6 +12,9 @@ const progresIls = {
 
 const active = "_active";
 
+const submitButton = document.querySelector('.lead-form__button'),
+    contactInput = document.querySelector('.final-page__contact-area > input')
+
 let lastSelectChng = new Date ();
 let buttonFirstScr =  document.querySelector('.start-page__button');
 const firstScreenElement = {
@@ -284,7 +287,8 @@ const resultGenerator = (data) => {
         resultText[`${element.title}`] =  resultAsk 
     })
 
-    quizeElements.main.innerHTML = 'Succes';
+    buttonVisib(submitButton, true);
+    buttonVisib(contactInput, true);
 
     async function postData (){
         let data = JSON.stringify(resultText)
@@ -322,3 +326,17 @@ const finalScreenEvent = () => {
     document.querySelector('.quiz.quiz_sidebar_on').classList.add(active);
 }
 
+
+submitButton.addEventListener('click', () => {
+    resultGenerator()
+})
+
+contactInput.addEventListener('change', (e)=> {
+    if ( e.target.value.length > 9) {
+        console.log('aaaaa')
+        buttonVisib(submitButton, false)
+    } else {
+        buttonVisib(submitButton, true)
+    }
+
+})
