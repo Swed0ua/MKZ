@@ -126,7 +126,6 @@ buttons.prev.addEventListener('click', (e)=> {
 })
 
 const buttonVisib = (button, bool) => {
-    console.log(bool)
     button.disabled = bool
 }
 
@@ -278,15 +277,15 @@ subitems.forEach( element => {
 })
 
 const resultGenerator = (data) => {
-    let resultText = {};
-    quizeItems.forEach(element => {
+    let resultText = '';
+    quizeItems.forEach((element, index) => {
         let resultAsk = '___ '
         element.items.filter(e=> {
             if (e.select) resultAsk = e.text
         }) 
-        resultText[`${element.title}`] =  resultAsk 
+        resultText += (index+1) + ') ' + element.title + " => " + resultAsk + '. '; 
     })
-
+    
     buttonVisib(submitButton, true);
     buttonVisib(contactInput, true);
 
@@ -334,7 +333,6 @@ submitButton.addEventListener('click', () => {
 
 contactInput.addEventListener('change', (e)=> {
     if ( e.target.value.length > 9) {
-        console.log('aaaaa')
         buttonVisib(submitButton, false)
     } else {
         buttonVisib(submitButton, true)
