@@ -292,13 +292,13 @@ const resultGenerator = (data) => {
 
     async function postData (){
         let data = JSON.stringify(resultText)
-        fetch("https://formspree.io/f/xjvlaade", {
+        fetch("./mailer.php", {
             method: 'POST',
             body: data,
             headers: {
                 'Accept': 'application/json'
             }
-        })
+        }).then(e => console.log(e))
         .catch(err => console.log(err))
     }
     postData()
