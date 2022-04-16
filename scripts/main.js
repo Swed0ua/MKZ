@@ -214,6 +214,8 @@ const switchLvl = (action, element = null) => {
     } else if (!action && quizProgress.index-- > 0) {
         quizProgress.progress -=  quizeItems[index-1].progress;
         quizProgress.bonus -=  quizeItems[index-1].bonus;
+    }else if (action && quizProgress.index + 1 == quizeItems.length) {
+        resultGenerator();
     }
     let newCh = document.querySelector(`.quiz__question-item[data-index='${quizProgress.index}']`);
     newCh.classList.add('_active');
@@ -274,9 +276,8 @@ const resultGenerator = (data) => {
         resultText += element.title + " => " + resultAsk 
     })
     console.log(resultText)
-} 
-
-resultGenerator()
+    quizeElements.main.innerHTML = resultText;
+}
 
 setTimeout(()=>{
     rerederPage()
