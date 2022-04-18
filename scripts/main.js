@@ -12,8 +12,8 @@ const progresIls = {
 
 const active = "_active";
 
-const submitButton = document.querySelector('.lead-form__button'),
-    contactInput = document.querySelector('.final-page__contact-area > input')
+const submitButton = document.querySelectorAll('.lead-form__button'),
+    contactInput = document.querySelectorAll('.final-page__contact-area > input')
 
 let lastSelectChng = new Date ();
 let buttonFirstScr =  document.querySelector('.start-page__button');
@@ -21,6 +21,51 @@ const firstScreenElement = {
     parent: document.querySelector('.app__start-page'),
     left : document.querySelector('.start-page__bg'),
     right : document.querySelector('.start-page__content ')
+}
+
+const finalPagePhoneArea = {
+    viber: document.querySelector('.final-page__form-viber'),
+    phone: document.querySelector('.final-page__form-tell'),
+    chec: document.querySelector('.final-page__form-checked')
+}
+
+
+let mesList = document.querySelectorAll('.messengers__item')
+
+mesList.forEach((el, i) => {
+    el.addEventListener('click', ()=> {
+        if (i == 0) {
+            viewMessArea('VIBER')
+        }
+    
+        if (i == 1) {
+            viewMessArea('PHONE')
+        }
+    })
+})
+
+let chbt = document.querySelectorAll('.cbt')
+
+chbt.forEach(e=> {
+    e.addEventListener('click', ()=> {
+        viewMessArea(false)
+    })
+})
+
+
+const viewMessArea = (mess = false) => {
+    console.log(mess)
+    if (mess && mess == 'VIBER') {
+        finalPagePhoneArea.viber.classList.add(active);
+        finalPagePhoneArea.chec.classList.remove(active);
+    } else if (mess && mess == 'PHONE') {
+        finalPagePhoneArea.phone.classList.add(active);
+        finalPagePhoneArea.chec.classList.remove(active);
+    } else {
+        finalPagePhoneArea.viber.classList.remove(active);
+        finalPagePhoneArea.phone.classList.remove(active);
+        finalPagePhoneArea.chec.classList.add(active);
+    }
 }
 
 let quizeItems = [
@@ -283,25 +328,27 @@ const resultGenerator = (data) => {
         element.items.filter(e=> {
             if (e.select) resultAsk = e.text
         }) 
-        resultText += (index+1) + ') ' + element.title + " => " + resultAsk + '. '; 
+        resultText += (index+1) + ') ' + element.title + " => " + resultAsk + '. \r\n'; 
     })
     
     buttonVisib(submitButton, true);
     buttonVisib(contactInput, true);
+    if (data == 'V') {
+        resultText += 'messenger => VIBER'
+    } else {
+        resultText += 'messenger => Telephone'
+    }
 
     async function postData (){
-        let data = JSON.stringify({title: 'Запит на сервер!',resultText: resultText})
-        fetch("./mailer.php", {
+        fetch("scripts/mailer.php", {
             method: 'POST',
-            body: data,
-            headers: {
-                'Accept': 'application/json'
-            }
+            body: resultText
         })
         .catch(err => console.log(err))
         document.querySelector('.final-page__form').innerHTML = 'Повідомлення успішно надіслане!'
     }
     postData()
+    viewMessArea(false)
 }
 
 setTimeout(()=>{
@@ -327,15 +374,24 @@ const finalScreenEvent = () => {
 }
 
 
-submitButton.addEventListener('click', () => {
-    resultGenerator()
+submitButton.forEach((e, i) => {
+    e.addEventListener('click', () => {
+        resultGenerator(i == 0 ? 'V' : 'T')
+}) 
 })
 
-contactInput.addEventListener('change', (e)=> {
-    if ( e.target.value.length > 9) {
-        buttonVisib(submitButton, false)
-    } else {
-        buttonVisib(submitButton, true)
-    }
-
+contactInput.forEach(el => {
+    el.addEventListener('change', (e)=> {
+        if ( e.target.value.length > 9) {
+            buttonVisib(submitButton[0], false)
+            buttonVisib(submitButton[1], false)
+        } else {
+            buttonVisib(submitButton[0], true)
+            buttonVisib(submitButton[1], true)
+        }
+    
+    })
 })
+    
+
+
