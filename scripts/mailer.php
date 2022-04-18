@@ -1,6 +1,6 @@
 
 <?php
-$to      = 'shmagala2001@gmail.com';
+$to      = 'mebli.biz@gmail.com';
 $subject = 'Опитувальник';
 $headers = 'From: webmaster@example.com' . "\r\n" .
     'Reply-To: webmaster@example.com' . "\r\n" .
